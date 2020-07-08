@@ -4,27 +4,16 @@
 #include "data.h"
 #include "wave.cpp"
 #include <windows.h>
-//#include "Setting.h"
-#include "Setting.cpp"
+#include "Setting.h"
+//#include "Setting.cpp"
 #define CHARBUFF 124
 
 
-int main(int argc, char* argv[])
-{
-
-    char currentDirectory[CHARBUFF];
-    getCurrentDirectory(currentDirectory);
-
-
-
+int main(int argc, char* argv[]){
     char info[CHARBUFF];
     char settingFile[CHARBUFF];
-
-    //sprintf_s(settingFile, "%s\\sound.ini", currentDirectory);
-    readDouble("wave1", "A", 0, info);
-
-    
   
+    //音声情報の宣言
     MONO_PCM pcm;
     int i;
     double A, f0;
@@ -32,10 +21,9 @@ int main(int argc, char* argv[])
     double time;
     char strBuf[100];
    
+    time = 10.0;//再生時間
 
-    time = 10.0;/* time[sec] */
-
-    pcm.fs = 8000;/* sampling frequency [Hz] */
+    pcm.fs = 8000;//サンプリング周波数
     pcm.bits = 16;/* quantization bits [bits] */
 
     ts = 1.0 / pcm.fs;/* sampling period */
@@ -43,13 +31,14 @@ int main(int argc, char* argv[])
     pcm.length = (int)(time / ts + 0.5);/* length of sound data */
     pcm.s = (double*)malloc(pcm.length * sizeof(double));
 
-    A =atof(info);/* amplitude */
-    f0 = 400.0;/* the fundamental frequency [Hz] */
+    A =1.0;//振幅
+    f0 = 400.0;//基本周波数
 
+    //波の情報の出力
     printf("ts = %.16lf\n", ts);
     printf("data length = %d\n", pcm.length);
 
-    //sine curve
+    //sinカーブの作成
     for (i = 0;i < pcm.length;i++) {
         pcm.s[i] = A * sin(2.0 * 3.14 * f0 * i / pcm.fs);
     }

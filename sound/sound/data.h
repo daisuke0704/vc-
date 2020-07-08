@@ -1,8 +1,9 @@
+//変数の構造体
+
 typedef struct
 {
-    int fs; /* sampling frequency (1.0/Ts)*/
-            /* Ts : sampling period */
-    int bits; /* quantization bit length */
-    int length; /* length of a sound data */
-    double* s; /* sound data */
+    int fs; //サンプリング周波数
+    int bits; //bit長
+    int length; //波長
+    double* s; //波のデータ
 }MONO_PCM;
