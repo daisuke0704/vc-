@@ -24,11 +24,11 @@ int main(int argc, char* argv[]){
     time = 10.0;//再生時間
 
     pcm.fs = 8000;//サンプリング周波数
-    pcm.bits = 16;/* quantization bits [bits] */
+    pcm.bits = 16;//bit長
 
-    ts = 1.0 / pcm.fs;/* sampling period */
+    ts = 1.0 / pcm.fs;
 
-    pcm.length = (int)(time / ts + 0.5);/* length of sound data */
+    pcm.length = (int)(time / ts + 0.5);//波長
     pcm.s = (double*)malloc(pcm.length * sizeof(double));
 
     A =1.0;//振幅

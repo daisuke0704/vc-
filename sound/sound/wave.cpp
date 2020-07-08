@@ -2,27 +2,29 @@
 #include <stdlib.h>
 #include <math.h>
 
-
+//wavファイル関数
 void wave_write(MONO_PCM* pcm, const char* filename)
 {
     
 
     FILE* fp;
     int i;
-    char riff_chunk_ID[4];//4byte
-    int riff_chunk_size;//4byte
-    char riff_form_type[4];//4byte
-    char fmt_chunk_ID[4];//4byte
-    int fmt_chunk_size;//4byte
-    short int fmt_wave_format_type;//2byte
-    short int fmt_channel;//2byte
-    int fmt_samples_per_sec;//4byte
-    int fmt_bytes_per_sec;//4byte
-    short int fmt_block_size;//2byte
-    short int fmt_bits_per_sample;//2byte
-    char data_chunk_ID[4];//4byte
-    int data_chunk_size;//4byte
-    short int data;//2byte
+
+    //wavファイル基本変数定義
+    char riff_chunk_ID[4];
+    int riff_chunk_size;
+    char riff_form_type[4];
+    char fmt_chunk_ID[4];
+    int fmt_chunk_size;
+    short int fmt_wave_format_type;
+    short int fmt_channel;
+    int fmt_samples_per_sec;
+    int fmt_bytes_per_sec;
+    short int fmt_block_size;
+    short int fmt_bits_per_sample;
+    char data_chunk_ID[4];
+    int data_chunk_size;
+    short int data;
     double s;
 
 
@@ -45,12 +47,12 @@ void wave_write(MONO_PCM* pcm, const char* filename)
     fmt_chunk_ID[3] = ' ';
 
     fmt_chunk_size = 16;
-    fmt_wave_format_type = 1; /* 1:PCM */
-    fmt_channel = 1;/* 1:monaural 2:stereo */
-    fmt_samples_per_sec = pcm->fs; /* sampling frequency */
+    fmt_wave_format_type = 1;
+    fmt_channel = 1;
+    fmt_samples_per_sec = pcm->fs; 
     fmt_bytes_per_sec = pcm->fs * pcm->bits / 8;
     fmt_block_size = pcm->bits / 8;
-    fmt_bits_per_sample = pcm->bits;/* quantization bit length */
+    fmt_bits_per_sample = pcm->bits;
 
     data_chunk_ID[0] = 'd';
     data_chunk_ID[1] = 'a';
@@ -75,10 +77,10 @@ void wave_write(MONO_PCM* pcm, const char* filename)
     fwrite(data_chunk_ID, 1, 4, fp);
     fwrite(&data_chunk_size, 4, 1, fp);
 
+
     for (i = 0;i < pcm->length;i++) {
         s = (pcm->s[i] + 1.0) / 2.0 * 65536.0;
-
-        /* clipping */
+        //リミッター
         if (s > 65535.0) {
             s = 65535.0;
         }
@@ -87,7 +89,7 @@ void wave_write(MONO_PCM* pcm, const char* filename)
         }
 
         data = (short)(s + 0.5) - 32768;
-        fwrite(&data, 2, 1, fp);/* writing sound data */
+        fwrite(&data, 2, 1, fp);
     }
 
     fclose(fp);
