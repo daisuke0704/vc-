@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
         pcm.s[i] = A * sin(2.0 * 3.14 * f0 * i / pcm.fs);
     }
 
-    wave_write(&pcm, "sine3.wav");
+    wave_write(&pcm, "sine.wav");
 
     free(pcm.s);
 
