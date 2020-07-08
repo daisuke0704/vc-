@@ -6,5 +6,3 @@ typedef struct
     int length; /* length of a sound data */
     double* s; /* sound data */
 }MONO_PCM;
-
-void wave_write(MONO_PCM* pcm, const char* filename);

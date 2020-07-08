@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "data.h"
+
 
 void wave_write(MONO_PCM* pcm, const char* filename)
 {
+    
+
     FILE* fp;
     int i;
     char riff_chunk_ID[4];//4byte
@@ -18,7 +20,6 @@ void wave_write(MONO_PCM* pcm, const char* filename)
     int fmt_bytes_per_sec;//4byte
     short int fmt_block_size;//2byte
     short int fmt_bits_per_sample;//2byte
-
     char data_chunk_ID[4];//4byte
     int data_chunk_size;//4byte
     short int data;//2byte
